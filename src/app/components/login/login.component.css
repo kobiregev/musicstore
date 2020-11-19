@@ -1,0 +1,19 @@
+.login_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+p>mat-form-field {
+    width: 100%;
+}
+
+button {
+    margin-right: 16px;
+}

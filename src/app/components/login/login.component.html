@@ -1,0 +1,32 @@
+<div class="login_container">
+    <div *ngIf="userService.user">
+        
+        <button *ngIf="userService.cartStatus.cartStatus === 'notActive' || userService.cartStatus.cartStatus === 'newUser'" mat-button>
+            <mat-icon>shopping_cart</mat-icon>
+            Start Shopping</button>
+        <button *ngIf="userService.cartStatus.cartStatus === 'open'" mat-button>Resume Shopping</button>
+    </div>
+    <form *ngIf="!userService.user" [formGroup]="loginForm" class="login_form">
+        <p >
+            <mat-form-field appearance="fill">
+                <mat-label>Enter your email</mat-label>
+                <input matInput placeholder="pat@example.com" formControlName="email" required>
+                <mat-error *ngIf="loginForm.controls.email.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter your password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </p>
+        <div class="buttons">
+            <button (click)="login()" mat-raised-button color="primary" [disabled]='loginForm.invalid'>Login</button>
+            <button (click)="register()" mat-raised-button color="primary">Register</button>
+        </div>
+    </form>
+</div>

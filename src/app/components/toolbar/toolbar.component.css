@@ -1,0 +1,14 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+.greeting{
+    margin-right: 20px;
+}
+.contact {
+    display: flex;
+    flex-direction: column;
+}
+.toolbar {
+    position: sticky;
+    top: 0
+  }

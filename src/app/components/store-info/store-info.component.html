@@ -1,0 +1,11 @@
+<div>
+    <p>
+        Available products in our store - {{info?.numberOfProducts}}
+    </p>
+    <p>
+        Number of orders made in our store - {{info?.numberOfOrders}}
+    </p>
+    <div *ngIf="userService.cartStatus?.cartStatus"> -->
+        <p>{{userService.cartStatus.msg}}</p>
+    </div>
+</div>

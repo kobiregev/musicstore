@@ -1,0 +1,20 @@
+<mat-toolbar color="primary" class="toolbar">
+  <button (click)="goToMainPage()" mat-icon-button class="example-icon" aria-label="shop icon">
+    <mat-icon>store</mat-icon>
+  </button>
+  <span>Kobi's Music Store</span>
+  <span class="example-spacer"></span>
+  <span class="mat-caption greeting">
+    Hello
+    {{ userService?.user?.fname || "Guest"}}
+  </span>
+  <span class="mat-caption contact">
+    Contact us:
+    <span>
+      KobiMusic@gmail.com
+    </span>
+    <span>
+      +12127319863
+    </span>
+  </span>
+</mat-toolbar>
