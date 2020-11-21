@@ -1,1 +1,68 @@
-<p>register works!</p>
+<mat-horizontal-stepper linear #stepper>
+    <mat-step [stepControl]="firstForm" [editable]="isEditable">
+        <form [formGroup]="firstForm">
+            <ng-template matStepLabel>Fill out your id email and password</ng-template>
+            <mat-form-field>
+                <mat-label>Israeli id</mat-label>
+                <input matInput formControlName="id" placeholder="Israeli Id" required>
+                <mat-error *ngIf="firstForm.controls.id.errors?.idInvalid">id invalid</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" placeholder="blah@blah.co.il" required EmailNotTakenValidator>
+                <mat-error *ngIf="firstForm.controls.email.errors?.emailExists">This Email is already taken</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input type="password" matInput formControlName="password" placeholder="Password" required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Confirm Password</mat-label>
+                <input type="password" matInput formControlName="confirmPassword" placeholder="Confirm Password"
+                    required>
+                <mat-error *ngIf="firstForm.controls.confirmPassword.errors?.mustMatch">Password confirmation must match
+                    password</mat-error>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="secondForm" [editable]="isEditable">
+        <form [formGroup]="secondForm">
+            <ng-template matStepLabel>Fill out your address</ng-template>
+            <mat-form-field>
+                <mat-label>City</mat-label>
+                <mat-select formControlName="city">
+                    <mat-option *ngFor="let city of cities" [value]="city.value">
+                        {{city.value}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Street</mat-label>
+                <input matInput formControlName="street" placeholder="Ex. 1 Main St, New York, NY" required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="fname" placeholder="Jonny" required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lname" placeholder="Jonniahoo" required>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>
