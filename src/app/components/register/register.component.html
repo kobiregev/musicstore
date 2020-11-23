@@ -4,17 +4,22 @@
             <ng-template matStepLabel>Fill out your id email and password</ng-template>
             <mat-form-field>
                 <mat-label>Israeli id</mat-label>
-                <input matInput formControlName="id" placeholder="Israeli Id" required>
-                <mat-error *ngIf="firstForm.controls.id.errors?.idInvalid">id invalid</mat-error>
+                <input matInput formControlName="israeliId" placeholder="Israeli Id" required>
+                <mat-error *ngIf="firstForm.controls.israeliId.errors?.idInvalid">id invalid.</mat-error>
+                <mat-error *ngIf="firstForm.controls.israeliId.errors?.required">This field is required.</mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Email</mat-label>
                 <input matInput formControlName="email" placeholder="blah@blah.co.il" required EmailNotTakenValidator>
-                <mat-error *ngIf="firstForm.controls.email.errors?.emailExists">This Email is already taken</mat-error>
+                <mat-error *ngIf="firstForm.controls.email.errors?.emailExists">This Email is already taken.</mat-error>
+                <mat-error *ngIf="firstForm.controls.email.errors?.required">This field is required.</mat-error>
+                <mat-error *ngIf="firstForm.controls.email.errors?.email">Not a valid email.</mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Password</mat-label>
                 <input type="password" matInput formControlName="password" placeholder="Password" required>
+                <mat-error *ngIf="firstForm.controls.password.errors?.minlength">Password must to have at least 4
+                    charcters</mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Confirm Password</mat-label>
@@ -38,22 +43,26 @@
                         {{city.value}}
                     </mat-option>
                 </mat-select>
+                <mat-error *ngIf="secondForm.controls.city.errors?.required">This field is required.</mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Street</mat-label>
                 <input matInput formControlName="street" placeholder="Ex. 1 Main St, New York, NY" required>
+                <mat-error *ngIf="secondForm.controls.street.errors?.required">This field is required.</mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>First Name</mat-label>
                 <input matInput formControlName="fname" placeholder="Jonny" required>
+                <mat-error *ngIf="secondForm.controls.fname.errors?.required">This field is required.</mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Last Name</mat-label>
                 <input matInput formControlName="lname" placeholder="Jonniahoo" required>
+                <mat-error *ngIf="secondForm.controls.lname.errors?.required">This field is required.</mat-error>
             </mat-form-field>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button (click)="register(stepper)" >Register</button>
             </div>
         </form>
     </mat-step>

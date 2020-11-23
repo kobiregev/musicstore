@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { UserService } from 'src/app/service/user.service';
 import { RegisterValidators } from 'src/app/validators/notTaken.validator';
@@ -28,11 +29,11 @@ export class RegisterComponent implements OnInit {
   ]
 
 
-  constructor(public formService: FormBuilder, public userService: UserService, private registerValidators: RegisterValidators) { }
+  constructor(public formService: FormBuilder, public userService: UserService, private registerValidators: RegisterValidators, private router: Router) { }
 
   ngOnInit(): void {
     this.firstForm = this.formService.group({
-      id: ["", [Validators.required, this.registerValidators.israelIdValidator]],
+      israeliId: ["", [Validators.required, this.registerValidators.israelIdValidator]],
       email: ["", [Validators.required, Validators.email,], [this.registerValidators.emailValidator()]],
       password: ["", [Validators.required, Validators.minLength(4)]],
       confirmPassword: ["", [Validators.required, Validators.minLength(4)]],
@@ -45,11 +46,14 @@ export class RegisterComponent implements OnInit {
       lname: ["", Validators.required],
     })
   }
-  val() {
-    console.log(this.firstForm)
-  }
-  confirmPasswordValidator() {
-    return this.firstForm?.password.value !== this.firstForm?.confirmPassword.value ? { mustMatch: true } : null
+  register(stepper) {
+    this.userService.register({ ...this.firstForm.value, ...this.secondForm.value }).subscribe(
+      (res: any) => {
+        !res.error ? this.router.navigateByUrl('') : null
+      }, error => {
+        console.log(error)
+      }
+    )
   }
 }
 

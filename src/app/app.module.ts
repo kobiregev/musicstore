@@ -29,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
+import { ShopComponent } from './components/shop/shop.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +39,7 @@ import { MatSelectModule } from '@angular/material/select';
     MainPageComponent,
     LoginComponent,
     AboutUsComponent,
+    ShopComponent,
     
   ],
   imports: [

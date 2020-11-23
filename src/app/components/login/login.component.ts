@@ -10,6 +10,7 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class LoginComponent implements OnInit {
   loginForm
+  errorMsg
   hide = true;
 
   constructor(public formService: FormBuilder, private routerService: Router, public userService: UserService) { }
@@ -36,10 +37,27 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         if (!res.error) {
           this.userService.setUser(res.token, res.cart)
+          this.errorMsg = ''
+        }
+      }, error => {
+        error.error.error ? this.errorMsg = error.error.msg : null
+      }
+    )
+  }
+  createCart() {
+    this.userService.createCart().subscribe(
+      (res: any) => {
+        if (!res.error) {
+          this.userService.cartStatus.cartStatus = 'open'
+          this.routerService.navigateByUrl('/shop')
         }
       }, error => {
         console.log(error)
       }
     )
   }
+  resumeShopping() {
+    this.userService.user ? this.routerService.navigateByUrl('/shop') : null
+  }
+
 }
