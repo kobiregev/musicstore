@@ -1,5 +1,5 @@
 <div class="login_container">
-    <div *ngIf="userService.user">
+    <div *ngIf="userService.user"n>
         <button (click)="createCart()"
             *ngIf="userService.cartStatus.cartStatus === 'notActive' || userService.cartStatus.cartStatus === 'newUser'"
             mat-button>

@@ -1,1 +1,22 @@
-<p>shop works!</p>
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+        <app-cart></app-cart>
+    </mat-drawer>
+    <div class="example-sidenav-content">
+        <p class="categories_container">
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style" (change)="onValChange($event)" #categories="matButtonToggleGroup">
+                <mat-button-toggle value="All">All</mat-button-toggle>
+                <mat-button-toggle value="Guitars and Basses">Guitar and Basses</mat-button-toggle>
+                <mat-button-toggle value="Drums and Percussion">Drums and Percussion</mat-button-toggle>
+                <mat-button-toggle value="Electric Guitar Amps">Electric Guitar Amps</mat-button-toggle>
+                <mat-button-toggle value="Keys">Keys</mat-button-toggle>
+                <mat-button-toggle value="DJ Equipment">DJ Equipment</mat-button-toggle>
+            </mat-button-toggle-group>
+        </p>
+        <div class="products_container">
+            <div *ngFor='let product of userService.products'>
+                <app-product-card [product]="product"></app-product-card>
+            </div>
+        </div>
+    </div>
+</mat-drawer-container>

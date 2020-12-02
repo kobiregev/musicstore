@@ -30,6 +30,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { ShopComponent } from './components/shop/shop.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
+import { AddToCartComponent } from './components/add-to-cart/add-to-cart.component';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { CartComponent } from './components/cart/cart.component';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +49,10 @@ import { ShopComponent } from './components/shop/shop.component';
     LoginComponent,
     AboutUsComponent,
     ShopComponent,
+    SidebarComponent,
+    ProductCardComponent,
+    AddToCartComponent,
+    CartComponent,
     
   ],
   imports: [
@@ -55,7 +68,16 @@ import { ShopComponent } from './components/shop/shop.component';
     MatFormFieldModule,
     MatInputModule,
     MatStepperModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatTableModule,
+    MatTabsModule,
+    MatCardModule,
+    MatButtonToggleModule,
+    MatDialogModule,
+    MatBadgeModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

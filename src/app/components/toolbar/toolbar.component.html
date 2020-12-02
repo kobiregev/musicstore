@@ -1,20 +1,41 @@
 <mat-toolbar color="primary" class="toolbar">
-  <button (click)="goToMainPage()" mat-icon-button class="example-icon" aria-label="shop icon">
-    <mat-icon>store</mat-icon>
-  </button>
+  <span>
+    <button (click)="goToMainPage()" mat-icon-button class="example-icon" aria-label="shop icon">
+      <mat-icon>store</mat-icon>
+    </button>
+    <span *ngIf="storeService.sideNav && userService.user.role ==='user'" class="sidenav_searchBar_container">
+      <button  type="button" mat-icon-button (click)="this.storeService.sideNav.toggle()">
+        <mat-icon [matBadge]='userService.cart?.products.length || 0' matBadgeColor="accent">shopping_cart</mat-icon>
+      </button>
+      <mat-form-field >
+        <input #keywords [value]="value" (keyup)="value=keywords.value" matInput placeholder="Search..."
+          autocomplete="off">
+        <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="clearValue()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+          <button (click)="searchProduct()" mat-icon-button>
+            <mat-icon>
+              search
+            </mat-icon>
+          </button>
+    </span>
+  </span>
   <span>Kobi's Music Store</span>
-  <span class="example-spacer"></span>
-  <span class="mat-caption greeting">
-    Hello
-    {{ userService?.user?.fname || "Guest"}}
-  </span>
-  <span class="mat-caption contact">
-    Contact us:
-    <span>
-      KobiMusic@gmail.com
+  <span class="greeting_container">
+    <span class="mat-caption greeting">
+      Hello
+      {{ userService?.user?.fname || "Guest"}}
     </span>
-    <span>
-      +12127319863
+    <span class="mat-caption contact">
+      Contact us:
+      <span>
+        KobiMusic@gmail.com
+      </span>
+      <span>
+        +12127319863
+      </span>
     </span>
   </span>
+
 </mat-toolbar>

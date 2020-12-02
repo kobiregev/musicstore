@@ -17,7 +17,6 @@ export class StoreInfoComponent implements OnInit {
   getStoreInfo() {
     this.storeService.storeInfo().subscribe(
       (res: any) => {
-        console.log(res)
         !res.error ? this.info = res : null
       }, (error) => {
         console.log(error)

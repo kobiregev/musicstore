@@ -1,0 +1,15 @@
+.conatiner{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+img{
+    width: 85px;
+    height: 200px;
+    margin: 6px;
+}
+.buttons button{
+    margin: 2px;
+}

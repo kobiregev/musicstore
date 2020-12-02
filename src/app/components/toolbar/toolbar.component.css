@@ -1,14 +1,29 @@
-.example-spacer {
-    flex: 1 1 auto;
-}
-.greeting{
+.greeting {
     margin-right: 20px;
 }
+
 .contact {
     display: flex;
     flex-direction: column;
 }
+
 .toolbar {
     position: sticky;
-    top: 0
-  }
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    height: 85px;
+}
+
+.greeting_container {
+    display: flex;
+    align-items: center;
+}
+
+.input {
+    /* background-color: #673ab7 !important; */
+}
+
+/* input{
+    background-color: #673ab7;
+} */

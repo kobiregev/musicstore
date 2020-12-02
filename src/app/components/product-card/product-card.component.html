@@ -1,0 +1,17 @@
+<mat-card class="card mat-elevation-z2">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{product.name}}</mat-card-title>
+    <mat-card-subtitle>{{product.category.category}}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image src={{product.imgUrl}} alt="Photo of a product">
+  <mat-card-content>
+    <p>
+      Price : {{product.price}} $
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button *ngIf="userService.user.role ==='admin' else elseBlock" mat-button (click)="funcz()">Edit Product</button>
+    <ng-template #elseBlock><button mat-button (click)="openDialog()">Add To Cart</button></ng-template>
+  </mat-card-actions>
+</mat-card>
