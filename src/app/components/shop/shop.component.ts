@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import { StoreService } from 'src/app/service/store.service';
 import { UserService } from 'src/app/service/user.service';
 
@@ -14,10 +15,11 @@ export class ShopComponent implements OnInit {
   @ViewChild('categories') categories
   category;
 
-  constructor(public userService: UserService, public storeService: StoreService) { }
+  constructor(public userService: UserService, public storeService: StoreService, public ar: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getProducts()
+    this.storeService.setPath(this.ar.snapshot.routeConfig.path)
   }
 
   ngAfterViewInit(): void {
@@ -44,5 +46,5 @@ export class ShopComponent implements OnInit {
     this.category = e.value
     this.getProducts()
   }
-  
+
 }

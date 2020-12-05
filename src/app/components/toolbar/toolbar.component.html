@@ -1,25 +1,41 @@
 <mat-toolbar color="primary" class="toolbar">
-  <span>
-    <button (click)="goToMainPage()" mat-icon-button class="example-icon" aria-label="shop icon">
-      <mat-icon>store</mat-icon>
-    </button>
-    <span *ngIf="storeService.sideNav && userService.user.role ==='user'" class="sidenav_searchBar_container">
-      <button  type="button" mat-icon-button (click)="this.storeService.sideNav.toggle()">
+  <span *ngIf="storeService.sideNav">
+    <span *ngIf="this.userService.user.role ==='admin' else userblock">
+      <button (click)="this.storeService.sideNav.toggle()" mat-icon-button class="example-icon"
+        aria-label="admin settings">
+        <mat-icon>admin_panel_settings</mat-icon>
+      </button>
+    </span>
+
+    <ng-template #userblock>
+      <button type="button" mat-icon-button (click)="this.storeService.sideNav.toggle()">
         <mat-icon [matBadge]='userService.cart?.products.length || 0' matBadgeColor="accent">shopping_cart</mat-icon>
       </button>
-      <mat-form-field >
-        <input #keywords [value]="value" (keyup)="value=keywords.value" matInput placeholder="Search..."
-          autocomplete="off">
-        <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="clearValue()">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-          <button (click)="searchProduct()" mat-icon-button>
-            <mat-icon>
-              search
-            </mat-icon>
-          </button>
-    </span>
+    </ng-template>
+
+
+    <mat-form-field>
+      <input #keywords [value]="value" (keyup)="value=keywords.value" matInput placeholder="Search..."
+        autocomplete="off">
+      <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="clearValue()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button (click)="searchProduct()" mat-icon-button>
+      <mat-icon>
+        search
+      </mat-icon>
+    </button>
+  </span>
+  <span *ngIf="storeService.currentPath === 'order' ">
+    <mat-form-field>
+      <input #keywords [value]="storeService.keywords" (keyup)="storeService.keywords=keywords.value" matInput
+        placeholder="Search..." autocomplete="off">
+      <button mat-button *ngIf="storeService.keywords" matSuffix mat-icon-button aria-label="Clear"
+        (click)="storeService.clearSerchValue()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
   </span>
   <span>Kobi's Music Store</span>
   <span class="greeting_container">

@@ -10,9 +10,12 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class ToolbarComponent implements OnInit {
   value = ''
+  reciptSearchValue = ''
+  path;
   constructor(private routerService: Router, public userService: UserService, public storeService: StoreService) { }
 
   ngOnInit(): void {
+    
   }
 
   goToMainPage() {
@@ -31,6 +34,7 @@ export class ToolbarComponent implements OnInit {
       }
     )
   }
+
   clearValue() {
     this.value = ''
   }

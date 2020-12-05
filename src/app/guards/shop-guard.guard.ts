@@ -11,7 +11,8 @@ export class ShopGuardGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.userService.user && this.userService.cartStatus.cartStatus == "open" || this.userService.user.role === 'admin' ? true : false
+      console.log(this.userService.user)
+    return this.userService?.user && this.userService.cartStatus?.cartStatus == "open" || this.userService.user?.role === 'admin' ? true : false
   }
 
 }

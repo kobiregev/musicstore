@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { StoreService } from 'src/app/service/store.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -13,9 +14,10 @@ export class LoginComponent implements OnInit {
   errorMsg
   hide = true;
 
-  constructor(public formService: FormBuilder, private routerService: Router, public userService: UserService) { }
+  constructor(public formService: FormBuilder, private routerService: Router, public userService: UserService, private ar: ActivatedRoute, private storeService: StoreService) { }
 
   ngOnInit(): void {
+    this.storeService.setPath(this.ar.snapshot.routeConfig.path)
     this.loginForm = this.formService.group({
       email: ["", Validators.email],
       password: ["", [Validators.minLength(4), Validators.required]],

@@ -33,10 +33,11 @@ import { ShopComponent } from './components/shop/shop.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { AddToCartComponent } from './components/add-to-cart/add-to-cart.component';
-import {MatBadgeModule} from '@angular/material/badge';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { CartComponent } from './components/cart/cart.component';
-
+import { OrderComponent } from './components/order/order.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { CartComponent } from './components/cart/cart.component';
     ProductCardComponent,
     AddToCartComponent,
     CartComponent,
-    
+    OrderComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -77,7 +79,10 @@ import { CartComponent } from './components/cart/cart.component';
     MatButtonToggleModule,
     MatDialogModule,
     MatBadgeModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

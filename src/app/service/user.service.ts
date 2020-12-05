@@ -29,11 +29,9 @@ export class UserService {
     alert('logging out token expired')
     this.r.navigateByUrl('')
   }
-
   register(registerDetials) {
     return this.http.post(this.baseUrl + 'users/register', registerDetials)
   }
-
   createCart() {
     return this.http.post(this.baseUrl + 'cart/createcart', {}, { headers: { 'Authorization': localStorage.token } })
   }
@@ -43,14 +41,14 @@ export class UserService {
   removeFromCart(productId: string) {
     return this.http.post(this.baseUrl + 'cart/remove', { productId }, { headers: { 'Authorization': localStorage.token } })
   }
-
+  order(orderDetails) {
+    return this.http.post(this.baseUrl + 'orders', orderDetails, { headers: { 'Authorization': localStorage.token } })
+  }
   verifyToken(token) {
     return this.http.get(this.baseUrl + 'users/validateToken', {
       headers: { 'Authorization': token }
     })
   }
-
-
   getCart() {
     return this.http.get(this.baseUrl + 'cart', { headers: { 'Authorization': localStorage.token } })
   }
@@ -68,7 +66,9 @@ export class UserService {
   searchProducts(keywords) {
     return this.http.post(this.baseUrl + 'products/search', { keywords }, { headers: { 'Authorization': localStorage.token } })
   }
-
+  searchInRecipt(keywords) {
+    console.log(this.cart.products)
+  }
 
   setUser(token, cart) {
     let toNavigate;

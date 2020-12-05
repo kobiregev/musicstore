@@ -1,15 +1,19 @@
 <div *ngIf="userService.user.role === 'user' else adminNav ">
-    <div class="header_container">
+    <div class="header_container" *ngIf="storeService.currentPath ==='shop'">
         <h1 class="mat-h1 header">My Cart</h1>
-        <button color="primary" (click)="closeNav()" class="header_button" mat-icon-button>
+        <button mat-icon-button color="primary" (click)="closeNav()" class="header_button">
             <mat-icon>disabled_by_default</mat-icon>
         </button>
     </div>
     <table mat-table [dataSource]="userService.cartTableDataSource" class="mat-elevation-z8">
+        <!-- [ngClass]="{'highlited':storeService.isMarked(product.productId._id)}" -->
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let product"> {{product.productId.name}} </td>
+            <td mat-cell *matCellDef="let product" innerHTML={{storeService.Mark(product)}}>
+                <!-- {{product.productId.name}} -->
+            </td>
         </ng-container>
+
         <ng-container matColumnDef="quantity">
             <th mat-header-cell *matHeaderCellDef> Quantity </th>
             <td mat-cell *matCellDef="let product"> {{product.quantity}} </td>
@@ -24,7 +28,7 @@
                     alt="image of product">
             </td>
         </ng-container>
-        <ng-container matColumnDef="action">
+        <ng-container matColumnDef="action" *ngIf="storeService.currentPath === 'shop'">
             <th mat-header-cell *matHeaderCellDef> Action </th>
             <td mat-cell *matCellDef="let product">
                 <button mat-icon-button (click)="removeFromCart(product.productId._id)">
@@ -38,15 +42,15 @@
     <div class="cart_actions_container">
         <div class="cart_actions">
             <p class="mat-body-1 price" *ngIf="userService.cart">Total Price : {{userService.cart.price}} $</p>
-            <div>
-                <button mat-raised-button color="primary">Order</button>
+            <div *ngIf="storeService.currentPath === 'shop'">
+                <button (click)="order()" mat-raised-button color="primary">Order</button>
                 <button mat-raised-button>Clear Cart</button>
             </div>
         </div>
     </div>
 </div>
 <ng-template #adminNav>
-    <div class="header_container">
+    <div  class="header_container">
         <h1 class="mat-h1 header">Hey Admin</h1>
         <button color="primary" (click)="closeNav()" class="header_button" mat-icon-button>
             <mat-icon>disabled_by_default</mat-icon>
@@ -61,7 +65,7 @@
         <mat-form-field appearance="fill">
             <mat-label>Category</mat-label>
             <mat-select formControlName='category'>
-                <mat-option  *ngFor="let category of categories" [value]="category.value">
+                <mat-option *ngFor="let category of categories" [value]="category.value">
                     {{category.viewValue}}
                 </mat-option>
             </mat-select>

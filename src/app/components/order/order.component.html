@@ -1,0 +1,38 @@
+<div class="container">
+    <app-cart class="cart"></app-cart>
+    <div class="form_container">
+        <h1 class="mat-headline">Order</h1>
+        <mat-divider></mat-divider>
+        <form [formGroup]='orderForm'>
+            <mat-form-field appearance="legacy">
+                <mat-label>City</mat-label>
+                <input (dblclick)="autoFillCity()" formControlName='city' matInput placeholder="City"
+                    autocomplete="off">
+                <mat-icon matSuffix>location_city</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="legacy">
+                <mat-label>Street</mat-label>
+                <input (dblclick)="autoFillStreet()" formControlName='street' matInput placeholder="Street"
+                    autocomplete='off'>
+                <mat-icon matSuffix>apartment</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="legacy">
+                <mat-label>Choose a date</mat-label>
+                <input formControlName='deliveryDate' matInput [min]="minDate" [matDatepicker]="picker"
+                    autocomplete='off'>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <h1 class="mat-headline">Payment:
+                <mat-divider></mat-divider>
+            </h1>
+            <mat-form-field appearance="legacy">
+                <mat-label>Credit Card</mat-label>
+                <input formControlName='creditCard' matInput placeholder="Credit Card" autocomplete="off">
+                <mat-icon matSuffix>payment</mat-icon>
+            </mat-form-field>
+            <button (click)="order()" color='primary' [disabled]='orderForm.invalid' mat-raised-button>Order</button>
+            {{orderForm.value | json}}
+        </form>
+    </div>
+</div>
