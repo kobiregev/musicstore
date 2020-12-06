@@ -1,5 +1,8 @@
 <div class="container">
-    <app-cart class="cart"></app-cart>
+    <span #cart class="cart">
+        <app-cart></app-cart>
+    </span>
+    <mat-divider [vertical]="true"></mat-divider>
     <div class="form_container">
         <h1 class="mat-headline">Order</h1>
         <mat-divider></mat-divider>
@@ -32,7 +35,6 @@
                 <mat-icon matSuffix>payment</mat-icon>
             </mat-form-field>
             <button (click)="order()" color='primary' [disabled]='orderForm.invalid' mat-raised-button>Order</button>
-            {{orderForm.value | json}}
         </form>
     </div>
 </div>

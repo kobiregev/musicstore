@@ -97,4 +97,5 @@ export class CartComponent implements OnInit {
   order() {
     this.r.navigateByUrl('order')
   }
+
 }

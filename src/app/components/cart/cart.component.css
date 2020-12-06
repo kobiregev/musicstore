@@ -1,7 +1,7 @@
-
 table {
     width: 100%;
     overflow: auto;
+    height: 100%;
 }
 
 .table_img {
@@ -35,11 +35,17 @@ form {
     flex-direction: column;
     align-items: center;
 }
+
 mat-row {
     border: 1px solid #e7e7e7;
     font-weight: bold;
     height: 30px !important;
 }
+
 .highlited {
     background-color: yellow;
+}
+
+.table_container {
+    height: 74vh;
 }

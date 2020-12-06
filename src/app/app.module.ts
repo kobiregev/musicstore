@@ -38,6 +38,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { CartComponent } from './components/cart/cart.component';
 import { OrderComponent } from './components/order/order.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     AddToCartComponent,
     CartComponent,
     OrderComponent,
+    OrderConfirmationComponent,
 
   ],
   imports: [
