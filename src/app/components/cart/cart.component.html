@@ -83,10 +83,13 @@
             <mat-label>Price</mat-label>
             <input formControlName='price' matInput type="number">
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <span>
+            <app-file-upload formControlName='image'></app-file-upload>
+        </span>
+        <!-- <mat-form-field appearance="fill">
             <mat-label>Img Url</mat-label>
             <input formControlName='imgUrl' matInput type="text">
-        </mat-form-field>
+        </mat-form-field> -->
         <button (click)="saveProduct()" mat-raised-button>Save</button>
     </form>
 </ng-template>

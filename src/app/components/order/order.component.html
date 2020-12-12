@@ -12,19 +12,23 @@
                 <input (dblclick)="autoFillCity()" formControlName='city' matInput placeholder="City"
                     autocomplete="off">
                 <mat-icon matSuffix>location_city</mat-icon>
+                <mat-error *ngIf="orderForm.controls.city.errors?.required">This field is required.</mat-error>
             </mat-form-field>
             <mat-form-field appearance="legacy">
                 <mat-label>Street</mat-label>
                 <input (dblclick)="autoFillStreet()" formControlName='street' matInput placeholder="Street"
                     autocomplete='off'>
                 <mat-icon matSuffix>apartment</mat-icon>
+                <mat-error *ngIf="orderForm.controls.street.errors?.required">This field is required.</mat-error>
             </mat-form-field>
             <mat-form-field appearance="legacy">
                 <mat-label>Choose a date</mat-label>
-                <input formControlName='deliveryDate' matInput [min]="minDate" [matDatepicker]="picker"
-                    autocomplete='off'>
+                <input formControlName='deliveryDate' matInput [matDatepickerFilter]="myFilter" [min]='minDate'
+                    [matDatepicker]="picker" autocomplete='off'>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="orderForm.controls.deliveryDate.errors?.required">This field is required.</mat-error>
+                <mat-error *ngIf="orderForm.controls.deliveryDate.errors?.matDatepickerFilter">There are no more shipments available on this day.</mat-error>
             </mat-form-field>
             <h1 class="mat-headline">Payment:
                 <mat-divider></mat-divider>
@@ -33,6 +37,9 @@
                 <mat-label>Credit Card</mat-label>
                 <input formControlName='creditCard' matInput placeholder="Credit Card" autocomplete="off">
                 <mat-icon matSuffix>payment</mat-icon>
+                <mat-error *ngIf="orderForm.controls.creditCard.errors?.required">This field is required.</mat-error>
+                <mat-error *ngIf="orderForm.controls.creditCard.errors?.pattern">You must enter a valid credit
+                    card.</mat-error>
             </mat-form-field>
             <button (click)="order()" color='primary' [disabled]='orderForm.invalid' mat-raised-button>Order</button>
         </form>

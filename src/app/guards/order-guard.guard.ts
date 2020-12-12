@@ -6,12 +6,12 @@ import { UserService } from '../service/user.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ShopGuardGuard implements CanActivate {
+export class OrderGuardGuard implements CanActivate {
   constructor(private userService: UserService) { }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.userService?.user && this.userService.cartStatus?.cartStatus == "open" || this.userService.user?.role === 'admin' ? true : false
+    return this.userService?.user && this.userService.cartStatus?.cartStatus == "open" ? true : false
   }
 
 }

@@ -22,6 +22,9 @@ export class StoreService {
   storeInfo() {
     return this.http.get(this.baseUrl + '/storeinfo')
   }
+  checkOrderDates() {
+    return this.http.get(this.baseUrl + '/orders', { headers: { 'Authorization': localStorage.token } })
+  }
   setSideNav(nav) {
     this.sideNav = nav
   }
@@ -32,19 +35,22 @@ export class StoreService {
     this.currentPath = path
   }
   setForm(product) {
-    this.currentForm.setValue({
+    this.currentForm.patchValue({
       _id: product._id,
       name: product.name,
       category: product.category._id,
       price: product.price,
-      imgUrl: product.imgUrl,
     })
   }
   setCartForPdf(pdfInfo) {
     this.pdfInfo = pdfInfo
   }
+  // saveProduct(product) {
+  //   return this.http.put(this.baseUrl + '/products/editproduct', { ...product }, { headers: { 'Authorization': localStorage.token } })
+  // }
   saveProduct(product) {
-    return this.http.put(this.baseUrl + '/products/editproduct', { ...product }, { headers: { 'Authorization': localStorage.token } })
+    //{ headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true }
+    return this.http.post(this.baseUrl + '/products/editproduct', product, { headers: { 'Authorization': localStorage.token } })
   }
   unselectCategories() {
     this.categories._buttonToggles.map(btn => btn.checked = false)
@@ -70,5 +76,6 @@ export class StoreService {
       pdf.save("download.pdf");
     })
   }
+ 
 
 }

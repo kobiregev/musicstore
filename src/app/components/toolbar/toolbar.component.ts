@@ -38,5 +38,4 @@ export class ToolbarComponent implements OnInit {
   clearValue() {
     this.value = ''
   }
-
 }

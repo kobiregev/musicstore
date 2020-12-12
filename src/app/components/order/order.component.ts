@@ -17,6 +17,7 @@ export class OrderComponent implements OnInit {
 
   orderForm
   minDate = new Date()
+  dates;
   constructor(private _snackBar: MatSnackBar, public fb: FormBuilder, public userService: UserService,
     private r: Router,
     private storeService: StoreService,
@@ -30,9 +31,19 @@ export class OrderComponent implements OnInit {
       deliveryDate: ["", [Validators.required,]],
       creditCard: ["", [Validators.required, Validators.pattern(/^[0-9]{8}$/)]],
     })
+    this.checkOrderDates()
   }
   ngAfterViewInit(): void {
     this.storeService.setCartForPdf(this.cart)
+  }
+  checkOrderDates() {
+    this.storeService.checkOrderDates().subscribe(
+      (res: any) => {
+        !res.error ? this.dates = res : null
+      }, error => {
+        console.log(error)
+      }
+    )
   }
   autoFillCity() {
     this.orderForm.patchValue({
@@ -47,7 +58,6 @@ export class OrderComponent implements OnInit {
   order() {
     this.userService.order(this.orderForm.value).subscribe(
       (res: any) => {
-        console.log(res)
         if (!res.error) {
           this.openDialog()
           this.userService.cartStatus.cartStatus = 'notActive'
@@ -68,4 +78,11 @@ export class OrderComponent implements OnInit {
       this.r.navigateByUrl('')
     });
   }
+
+  myFilter = (day) => {
+    //check globaly
+    day.setHours(2)
+    return !this.dates.find(date => date == day)
+  }
+
 }

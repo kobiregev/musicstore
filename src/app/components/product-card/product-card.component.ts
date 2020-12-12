@@ -12,9 +12,7 @@ import { AddToCartComponent } from '../add-to-cart/add-to-cart.component';
 export class ProductCardComponent implements OnInit {
   @Input() product
   constructor(public userService: UserService, public dialog: MatDialog, public storeService: StoreService) { }
-
   ngOnInit(): void {
-
   }
 
   openDialog() {

@@ -34,7 +34,6 @@ export class RegisterValidators {
         return (formGroup: FormGroup) => {
             const control = formGroup.controls.password;
             const matchingControl = formGroup.controls.confirmPassword;
-            console.log(formGroup)
             if (matchingControl.errors && !matchingControl.errors.mustMatch) {
                 return;
             }

@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { StoreService } from 'src/app/service/store.service';
 import { UserService } from 'src/app/service/user.service';
+import { ProductCardComponent } from '../product-card/product-card.component';
 
 @Component({
   selector: 'app-cart',
@@ -26,8 +27,9 @@ export class CartComponent implements OnInit {
     { value: '5fafce93a1b1d99c71096d0a', viewValue: 'DJ Equipment' },
   ];
   constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
     public userService: UserService, public storeService: StoreService,
-    public fb: FormBuilder, public r: Router, public ar: ActivatedRoute) { }
+    public fb: FormBuilder, public r: Router, public ar: ActivatedRoute,) { }
 
   ngOnInit(): void {
     this.storeService.setPath(this.ar.snapshot.routeConfig.path)
@@ -37,7 +39,8 @@ export class CartComponent implements OnInit {
       name: [''],
       category: [''],
       price: [''],
-      imgUrl: ['']
+      image: ['']
+      // imgUrl: ['']
     })
     // can be shortend
     this.storeService.currentPath === 'shop' ? this.displayedColumns = ['name', 'quantity', 'price', 'image', 'action'] : this.displayedColumns = ['name', 'quantity', 'price', 'image']
@@ -78,7 +81,7 @@ export class CartComponent implements OnInit {
     )
   }
   saveProduct() {
-    this.storeService.saveProduct(this.productForm.value).subscribe(
+    this.storeService.saveProduct(this.toFormData(this.productForm.value)).subscribe(
       (res: any) => {
         if (!res.error) {
           this.userService.products = res
@@ -98,4 +101,12 @@ export class CartComponent implements OnInit {
     this.r.navigateByUrl('order')
   }
 
+  toFormData<T>(formValue) {
+    const formData = new FormData();
+    for (const key of Object.keys(formValue)) {
+      const value = formValue[key];
+      formData.append(key, value);
+    }
+    return formData;
+  }
 }
