@@ -1,5 +1,8 @@
-<div>
-    <span>Choose file</span>
-    <span>{{file ? file.name : 'or drag and drop file here' }}</span>
-    <input class="file-input" type="file">
-  </div>
+<div class="dropzone">
+  <input id="file" class="file-input" type="file">
+  <h3>{{file ? file.name :'Drag and drop file here'}}</h3>
+  <h3>or</h3>
+  <label for="fileDropRef">Browse for file</label>
+  <!-- <span>Choose file</span> -->
+  <!-- <span>{{file ? file.name : ' or drag and drop file here' }}</span> -->
+</div>

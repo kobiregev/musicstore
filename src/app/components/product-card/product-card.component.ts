@@ -25,7 +25,7 @@ export class ProductCardComponent implements OnInit {
   }
   funcz() {
     this.storeService.setForm(this.product)
-    console.log(this.storeService.currentForm)
+    this.storeService.newProductMode = false
     this.storeService.sideNav.open()
   }
 }

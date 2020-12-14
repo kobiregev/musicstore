@@ -49,3 +49,8 @@ mat-row {
 .table_container {
     height: 74vh;
 }
+
+.backToShop_button {
+    display: flex;
+    justify-content: flex-end;
+}

@@ -5,6 +5,11 @@
             <mat-icon>disabled_by_default</mat-icon>
         </button>
     </div>
+    <div *ngIf="storeService.currentPath =='order'" class="backToShop_button">
+        <button mat-stroked-button color="primary" (click)="backToShop()">
+            Back To shop
+        </button>
+    </div>
     <div #tablePdf class="table_container">
         <table mat-table [dataSource]="userService.cartTableDataSource" class="mat-elevation-z0">
             <ng-container matColumnDef="name">
@@ -13,12 +18,10 @@
                 </td>
                 <td mat-footer-cell *matFooterCellDef> Total </td>
             </ng-container>
-
             <ng-container matColumnDef="quantity">
                 <th mat-header-cell *matHeaderCellDef> Quantity </th>
                 <td mat-cell *matCellDef="let product"> {{product.quantity}} </td>
                 <td mat-footer-cell *matFooterCellDef> </td>
-
             </ng-container>
             <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef> Price </th>
@@ -36,11 +39,11 @@
             <ng-container matColumnDef="action" *ngIf="storeService.currentPath === 'shop'">
                 <th mat-header-cell *matHeaderCellDef> Action </th>
                 <td mat-cell *matCellDef="let product">
-                    <button mat-icon-button (click)="removeFromCart(product.productId._id)">
+                    <button mat-icon-button (click)="removeFromCart(product.productId._id,false)">
                         <mat-icon color="primary">clear</mat-icon>
-                    </button></td>
+                    </button>
+                </td>
                 <td mat-footer-cell *matFooterCellDef> </td>
-
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -50,46 +53,82 @@
     <mat-paginator [pageSizeOptions]="[5, 7]" showFirstLastButtons></mat-paginator>
     <div class="cart_actions_container">
         <div class="cart_actions">
-            <!-- <p class="mat-body-1 price" *ngIf="userService.cart">Total Price : {{userService.cart.price}} $</p> -->
             <div *ngIf="storeService.currentPath === 'shop'">
-                <button (click)="order()" mat-raised-button color="primary">Order</button>
-                <button mat-raised-button>Clear Cart</button>
+                <button (click)="order()" mat-stroked-button color="primary">Order</button>
+                <button (click)="removeFromCart('',true)" mat-stroked-button>Clear Cart</button>
             </div>
         </div>
     </div>
 </div>
 <ng-template #adminNav>
     <div class="header_container">
-        <h1 class="mat-h1 header">Hey Admin</h1>
-        <button color="primary" (click)="closeNav()" class="header_button" mat-icon-button>
+        <h1 class="mat-h1 header" *ngIf="storeService.newProductMode else editHeader">Add Product</h1>
+        <ng-template #editHeader>
+            <h1 class="mat-h1 header">Edit Product</h1>
+        </ng-template>
+        <!-- <button color="primary" (click)="closeNav()" class="header_button" mat-icon-button>
             <mat-icon>disabled_by_default</mat-icon>
+        </button> -->
+        <button class="header_button" (click)="storeService.newProductMode = true" mat-icon-button color="primary">
+            <mat-icon>add_circle_outline</mat-icon>
         </button>
     </div>
     <mat-divider></mat-divider>
-    <form [formGroup]="productForm">
-        <mat-form-field appearance="fill">
-            <mat-label>Name</mat-label>
-            <input formControlName='name' matInput type="text">
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Category</mat-label>
-            <mat-select formControlName='category'>
-                <mat-option *ngFor="let category of categories" [value]="category.value">
-                    {{category.viewValue}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Price</mat-label>
-            <input formControlName='price' matInput type="number">
-        </mat-form-field>
-        <span>
-            <app-file-upload formControlName='image'></app-file-upload>
-        </span>
-        <!-- <mat-form-field appearance="fill">
-            <mat-label>Img Url</mat-label>
-            <input formControlName='imgUrl' matInput type="text">
-        </mat-form-field> -->
-        <button (click)="saveProduct()" mat-raised-button>Save</button>
-    </form>
+    <div *ngIf="!storeService.newProductMode else addProduct">
+        <form [formGroup]="productForm">
+            <mat-form-field appearance="legacy">
+                <mat-label>Name</mat-label>
+                <input formControlName='name' matInput type="text">
+            </mat-form-field>
+            <mat-form-field appearance="legacy">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName='category'>
+                    <mat-option *ngFor="let category of categories" [value]="category.value">
+                        {{category.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="legacy">
+                <mat-label>Price</mat-label>
+                <input formControlName='price' matInput type="number">
+            </mat-form-field>
+            <span>
+                <app-file-upload formControlName='image'></app-file-upload>
+                <mat-error *ngIf='productForm.controls.image.errors?.requiredFileType'>only jpg is allowed
+                </mat-error>
+            </span>
+            <button [disabled]='productForm.invalid' (click)="saveProduct()" mat-stroked-button
+                color="primary">Save</button>
+        </form>
+    </div>
+    <ng-template #addProduct>
+        <form [formGroup]="addProductForm">
+            <mat-form-field appearance="legacy">
+                <mat-label>Name</mat-label>
+                <input formControlName='name' matInput type="text">
+            </mat-form-field>
+            <mat-form-field appearance="legacy">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName='category'>
+                    <mat-option *ngFor="let category of categories" [value]="category.value">
+                        {{category.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="legacy">
+                <mat-label>Price</mat-label>
+                <input formControlName='price' matInput type="number">
+            </mat-form-field>
+            <span>
+                <app-file-upload formControlName='image'></app-file-upload>
+                <mat-error *ngIf='addProductForm.controls.image.errors?.requiredFileType'>only jpg is allowed
+                </mat-error>
+            </span>
+            <button [disabled]='addProductForm.invalid' (click)="addProducts()" mat-stroked-button
+                color="primary">Add</button>
+        </form>
+        <button (click)="test()">test</button>
+    </ng-template>
+
+
 </ng-template>

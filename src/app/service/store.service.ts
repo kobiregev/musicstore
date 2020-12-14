@@ -16,10 +16,12 @@ export class StoreService {
   currentForm;
   currentPath;
   pdfInfo
+  storeInfo;
   keywords = '';
+  newProductMode = false;
   constructor(private http: HttpClient, private userService: UserService) { }
 
-  storeInfo() {
+  getStoreInfo() {
     return this.http.get(this.baseUrl + '/storeinfo')
   }
   checkOrderDates() {
@@ -45,12 +47,12 @@ export class StoreService {
   setCartForPdf(pdfInfo) {
     this.pdfInfo = pdfInfo
   }
-  // saveProduct(product) {
-  //   return this.http.put(this.baseUrl + '/products/editproduct', { ...product }, { headers: { 'Authorization': localStorage.token } })
-  // }
   saveProduct(product) {
-    //{ headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true }
     return this.http.post(this.baseUrl + '/products/editproduct', product, { headers: { 'Authorization': localStorage.token } })
+  }
+  addProduct(product) {
+    console.log(product)
+    return this.http.post(this.baseUrl + '/products/addproduct', product, { headers: { 'Authorization': localStorage.token } })
   }
   unselectCategories() {
     this.categories._buttonToggles.map(btn => btn.checked = false)
@@ -76,6 +78,6 @@ export class StoreService {
       pdf.save("download.pdf");
     })
   }
- 
+
 
 }

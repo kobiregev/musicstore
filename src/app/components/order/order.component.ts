@@ -60,7 +60,9 @@ export class OrderComponent implements OnInit {
       (res: any) => {
         if (!res.error) {
           this.openDialog()
-          this.userService.cartStatus.cartStatus = 'notActive'
+          
+          this.userService.cartStatus.msg = res.msg
+          this.userService.cartStatus.cartStatus = res.cartStatus
         }
       }, error => {
         error.error.error && error.error.msg ? this.openSnackBar(error.error.msg) : null

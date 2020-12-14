@@ -2,6 +2,7 @@
 img{
     height: 280px;
     width: 80px;
+    object-fit: scale-down;
 }
 .card{
     display: flex !important;

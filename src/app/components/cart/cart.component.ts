@@ -1,11 +1,12 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StoreService } from 'src/app/service/store.service';
 import { UserService } from 'src/app/service/user.service';
-import { ProductCardComponent } from '../product-card/product-card.component';
+import { requiredFileType } from 'src/app/validators/requiredFileType.validator';
 
 @Component({
   selector: 'app-cart',
@@ -17,6 +18,7 @@ export class CartComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['name', 'quantity', 'price', 'image', 'action']
   productForm
+  addProductForm;
   path
   newProduct = false
   categories = [
@@ -27,7 +29,7 @@ export class CartComponent implements OnInit {
     { value: '5fafce93a1b1d99c71096d0a', viewValue: 'DJ Equipment' },
   ];
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
+    private _snackBar: MatSnackBar,
     public userService: UserService, public storeService: StoreService,
     public fb: FormBuilder, public r: Router, public ar: ActivatedRoute,) { }
 
@@ -36,11 +38,16 @@ export class CartComponent implements OnInit {
     this.getCart()
     this.productForm = this.fb.group({
       _id: [''],
-      name: [''],
-      category: [''],
-      price: [''],
-      image: ['']
-      // imgUrl: ['']
+      name: ['', Validators.required],
+      category: ['', Validators.required],
+      price: ['', Validators.required],
+      image: ['', requiredFileType('jpg')]
+    })
+    this.addProductForm = this.fb.group({
+      name: ['', Validators.required],
+      category: ['', Validators.required],
+      price: ['', Validators.required],
+      image: ['', [Validators.required, requiredFileType('jpg')]]
     })
     // can be shortend
     this.storeService.currentPath === 'shop' ? this.displayedColumns = ['name', 'quantity', 'price', 'image', 'action'] : this.displayedColumns = ['name', 'quantity', 'price', 'image']
@@ -68,8 +75,8 @@ export class CartComponent implements OnInit {
     )
   }
 
-  removeFromCart(productId) {
-    this.userService.removeFromCart(productId).subscribe(
+  removeFromCart(productId: string, clearCart: boolean) {
+    this.userService.removeFromCart(productId, clearCart).subscribe(
       (res: any) => {
         if (!res.error) {
           this.userService.cart = res
@@ -86,6 +93,21 @@ export class CartComponent implements OnInit {
         if (!res.error) {
           this.userService.products = res
           this.storeService.unselectCategories()
+          this.openSnackBar('Saved Successfully')
+          this.closeNav()
+        }
+      }, error => {
+        console.log(error)
+      }
+    )
+  }
+  addProducts() {
+    this.storeService.addProduct(this.toFormData(this.addProductForm.value)).subscribe(
+      (res: any) => {
+        if (!res.error) {
+          this.userService.products = res
+          this.storeService.unselectCategories()
+          this.openSnackBar('Added Successfully')
           this.closeNav()
         }
       }, error => {
@@ -108,5 +130,16 @@ export class CartComponent implements OnInit {
       formData.append(key, value);
     }
     return formData;
+  }
+  openSnackBar(message: string) {
+    this._snackBar.open(message, 'close', {
+      duration: 3000,
+    });
+  }
+  test() {
+    console.log(this.addProductForm)
+  }
+  backToShop() {
+    this.r.navigateByUrl('/shop')
   }
 }

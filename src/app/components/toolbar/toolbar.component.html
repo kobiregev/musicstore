@@ -1,20 +1,17 @@
 <mat-toolbar color="primary" class="toolbar">
   <span *ngIf="storeService.sideNav">
     <span *ngIf="this.userService.user.role ==='admin' else userblock">
-      <button (click)="this.storeService.sideNav.toggle()" mat-icon-button class="example-icon"
-        aria-label="admin settings">
+      <button (click)="this.storeService.sideNav.toggle();this.storeService.newProductMode = true" mat-icon-button
+        class="example-icon" aria-label="admin settings">
         <mat-icon>admin_panel_settings</mat-icon>
       </button>
     </span>
-
     <ng-template #userblock>
       <button type="button" mat-icon-button (click)="this.storeService.sideNav.toggle()">
         <mat-icon [matBadge]='userService.cart?.products.length || 0' matBadgeColor="accent">shopping_cart</mat-icon>
       </button>
     </ng-template>
-
-
-    <mat-form-field>
+    <mat-form-field class="search">
       <input #keywords [value]="value" (keyup)="value=keywords.value" matInput placeholder="Search..."
         autocomplete="off">
       <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="clearValue()">
@@ -28,7 +25,7 @@
     </button>
   </span>
   <span *ngIf="storeService.currentPath === 'order' ">
-    <mat-form-field>
+    <mat-form-field class="search">
       <input #keywords [value]="storeService.keywords" (keyup)="storeService.keywords=keywords.value" matInput
         placeholder="Search..." autocomplete="off">
       <button mat-button *ngIf="storeService.keywords" matSuffix mat-icon-button aria-label="Clear"

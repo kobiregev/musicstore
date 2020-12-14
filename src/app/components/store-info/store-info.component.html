@@ -1,6 +1,6 @@
 <div>
-    <h3 class="mat-subheading-2">Available products in our store : {{info?.numberOfProducts}}</h3>
-    <h3 class="mat-subheading-2">Number of orders made in our store : {{info?.numberOfOrders}}</h3>
+    <h3 class="mat-subheading-2">Available products in our store : {{storeService.storeInfo?.numberOfProducts}}</h3>
+    <h3 class="mat-subheading-2">Number of orders made in our store : {{storeService.storeInfo?.numberOfOrders}}</h3>
     <div *ngIf="userService.cartStatus?.cartStatus">
         <h3 class="mat-subheading-2">{{userService.cartStatus.msg}}</h3>
     </div>

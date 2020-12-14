@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { StoreService } from 'src/app/service/store.service';
 import { UserService } from 'src/app/service/user.service';
@@ -12,10 +13,9 @@ export class ToolbarComponent implements OnInit {
   value = ''
   reciptSearchValue = ''
   path;
-  constructor(private routerService: Router, public userService: UserService, public storeService: StoreService) { }
+  constructor(private routerService: Router, private _snackBar: MatSnackBar, public userService: UserService, public storeService: StoreService) { }
 
   ngOnInit(): void {
-    
   }
 
   goToMainPage() {
@@ -30,12 +30,18 @@ export class ToolbarComponent implements OnInit {
           this.storeService.unselectCategories()
         }
       }, error => {
+        this.openSnackBar(error.error.msg)
         console.log(error)
       }
     )
   }
-
   clearValue() {
     this.value = ''
+  }
+  openSnackBar(message: string) {
+    this._snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right'
+    });
   }
 }

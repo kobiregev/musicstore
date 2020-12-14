@@ -1,6 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StoreService } from 'src/app/service/store.service';
 import { UserService } from 'src/app/service/user.service';
@@ -20,11 +18,16 @@ export class ShopComponent implements OnInit {
   ngOnInit(): void {
     this.getProducts()
     this.storeService.setPath(this.ar.snapshot.routeConfig.path)
+
   }
 
   ngAfterViewInit(): void {
     this.storeService.setSideNav(this.drawer);
     this.storeService.setCategories(this.categories);
+    setTimeout(() => {
+      this.drawer.open()
+    }, 100);
+
   }
   ngOnDestroy(): void {
     this.storeService.setSideNav(null)
@@ -34,7 +37,6 @@ export class ShopComponent implements OnInit {
     let category = !this.category || this.category === 'All' ? "" : this.category
     this.userService.getProducts(category).subscribe(
       (res: any) => {
-        console.log(res)
         !res.error ? this.userService.products = res : null
       }, error => {
         console.log(error)

@@ -38,8 +38,8 @@ export class UserService {
   addToCart(productId: string, quantity: number) {
     return this.http.post(this.baseUrl + 'cart/add', { productId, quantity }, { headers: { 'Authorization': localStorage.token } })
   }
-  removeFromCart(productId: string) {
-    return this.http.post(this.baseUrl + 'cart/remove', { productId }, { headers: { 'Authorization': localStorage.token } })
+  removeFromCart(productId: string, clearCart: boolean) {
+    return this.http.post(this.baseUrl + 'cart/remove', { productId,clearCart }, { headers: { 'Authorization': localStorage.token } })
   }
   order(orderDetails) {
     return this.http.post(this.baseUrl + 'orders', orderDetails, { headers: { 'Authorization': localStorage.token } })

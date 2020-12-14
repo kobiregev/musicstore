@@ -8,16 +8,17 @@ import { UserService } from 'src/app/service/user.service';
   styleUrls: ['./store-info.component.css']
 })
 export class StoreInfoComponent implements OnInit {
-  constructor(private storeService: StoreService, public userService: UserService) { }
-  info
+  constructor(public storeService: StoreService, public userService: UserService) { }
+
 
   ngOnInit(): void {
     this.getStoreInfo()
   }
+
   getStoreInfo() {
-    this.storeService.storeInfo().subscribe(
+    this.storeService.getStoreInfo().subscribe(
       (res: any) => {
-        !res.error ? this.info = res : null
+        !res.error ? this.storeService.storeInfo = res : null
       }, (error) => {
         console.log(error)
       }
