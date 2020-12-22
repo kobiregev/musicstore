@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.firstForm = this.formService.group({
-      israeliId: ["", [Validators.required, this.registerValidators.israelIdValidator]],
+      israeliId: ["", [Validators.required, this.registerValidators.israelIdValidator], [this.registerValidators.idValidator()]],
       email: ["", [Validators.required, Validators.email,], [this.registerValidators.emailValidator()]],
       password: ["", [Validators.required, Validators.minLength(4)]],
       confirmPassword: ["", [Validators.required, Validators.minLength(4)]],

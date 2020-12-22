@@ -37,7 +37,7 @@ export class CartComponent implements OnInit {
     this.storeService.setPath(this.ar.snapshot.routeConfig.path)
     this.getCart()
     this.productForm = this.fb.group({
-      _id: [''],
+      _id: [{ value: '', disabled: true }, Validators.required],
       name: ['', Validators.required],
       category: ['', Validators.required],
       price: ['', Validators.required],

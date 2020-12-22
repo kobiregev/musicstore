@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import jwt_decode from "jwt-decode";
-import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +16,7 @@ export class UserService {
   products;
   baseUrl = 'http://localhost:1000/';
 
-  constructor(private http: HttpClient, private r: Router) { }
+  constructor(private http: HttpClient, private r: Router,) { }
 
   login(loginDetials) {
     return this.http.post(this.baseUrl + 'users/login', loginDetials)

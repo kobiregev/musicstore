@@ -2,13 +2,15 @@
     <h2 class="mat-title">{{product.name}}</h2>
     <h3 class="mat-subheading-2">{{product.category.category}}</h3>
     <img src="{{product.imgUrl}}" alt="photo of a product">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="legacy">
         <mat-label>Input</mat-label>
-        <input (change)="setQuantity($event)" matInput type="number" min="1">
+        <input (change)="setQuantity($event)" matInput type="number" min="1" autocomplete="off">
     </mat-form-field>
     <div class="buttons">
-        <button (click)="addToCart()" [disabled]="quantity < 1" mat-raised-button color="primary">Add</button>
-        <button (click)="cancel()" mat-raised-button color="warn">Cancel</button>
+        <button (click)="addToCart()" [disabled]="quantity < 1" mat-stroked-button color="primary">
+            Add
+        </button>
+        <button (click)="cancel()" mat-stroked-button color="warn">Cancel</button>
     </div>
 </div>
 

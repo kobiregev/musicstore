@@ -40,8 +40,7 @@ import { OrderComponent } from './components/order/order.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -88,7 +87,9 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
-    
+    MatMenuModule
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

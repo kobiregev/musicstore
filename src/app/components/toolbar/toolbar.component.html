@@ -8,7 +8,7 @@
     </span>
     <ng-template #userblock>
       <button type="button" mat-icon-button (click)="this.storeService.sideNav.toggle()">
-        <mat-icon [matBadge]='userService.cart?.products.length || 0' matBadgeColor="accent">shopping_cart</mat-icon>
+        <mat-icon [matBadge]='userService?.cart?.products.length || 0' matBadgeColor="accent">shopping_cart</mat-icon>
       </button>
     </ng-template>
     <mat-form-field class="search">
@@ -39,6 +39,15 @@
     <span class="mat-caption greeting">
       Hello
       {{ userService?.user?.fname || "Guest"}}
+      <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="userService.user">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>power_settings_new</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
     </span>
     <span class="mat-caption contact">
       Contact us:

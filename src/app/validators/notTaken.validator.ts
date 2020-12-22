@@ -11,21 +11,35 @@ import isIsraeliIdValid from 'israeli-id-validator';
 })
 export class RegisterValidators {
     constructor(private http: HttpClient) { }
-    url = 'http://localhost:1000/users/validateEmail'
+    url = 'http://localhost:1000/users/'
     searchEmail(email) {
-        return timer(1000)
-            .pipe(
-                switchMap(() => {
-                    return this.http.post(this.url, { email })
-                })
-            );
+        return timer(1000).pipe(switchMap(() => {
+            return this.http.post(this.url + 'validateEmail', { email })
+        }))
     }
+
+    searchIsraeliId(israeliId) {
+        return timer(1000).pipe(switchMap(() => {
+            return this.http.post(this.url + 'validateIsraeliId', { israeliId })
+        }))
+    }
+
     emailValidator(): AsyncValidatorFn {
         return (control: AbstractControl) => {
             return this.searchEmail(control.value)
                 .pipe(
                     map((res: any) => {
                         return res.error ? { 'emailExists': true } : null
+                    })
+                );
+        };
+    }
+    idValidator(): AsyncValidatorFn {
+        return (control: AbstractControl) => {
+            return this.searchIsraeliId(control.value)
+                .pipe(
+                    map((res: any) => {
+                        return res.error ? { 'idExists': true } : null
                     })
                 );
         };
@@ -44,6 +58,7 @@ export class RegisterValidators {
             }
         }
     }
+
     israelIdValidator(id) {
         return isIsraeliIdValid(id.value) ? null : { idInvalid: true }
     }

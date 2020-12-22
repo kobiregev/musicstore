@@ -44,4 +44,7 @@ export class ToolbarComponent implements OnInit {
       horizontalPosition: 'right'
     });
   }
+  logout() {
+    this.userService.logOut()
+  }
 }

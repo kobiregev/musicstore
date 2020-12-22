@@ -5,12 +5,13 @@
             <mat-form-field>
                 <mat-label>Israeli id</mat-label>
                 <input matInput formControlName="israeliId" placeholder="Israeli Id" required>
+                <mat-error *ngIf="firstForm.controls.israeliId.errors?.idExists">This id is already taken.</mat-error>
                 <mat-error *ngIf="firstForm.controls.israeliId.errors?.idInvalid">id invalid.</mat-error>
                 <mat-error *ngIf="firstForm.controls.israeliId.errors?.required">This field is required.</mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Email</mat-label>
-                <input matInput formControlName="email" placeholder="blah@blah.co.il" required EmailNotTakenValidator>
+                <input matInput formControlName="email" placeholder="blah@blah.co.il" required>
                 <mat-error *ngIf="firstForm.controls.email.errors?.emailExists">This Email is already taken.</mat-error>
                 <mat-error *ngIf="firstForm.controls.email.errors?.required">This field is required.</mat-error>
                 <mat-error *ngIf="firstForm.controls.email.errors?.email">Not a valid email.</mat-error>
@@ -19,14 +20,16 @@
                 <mat-label>Password</mat-label>
                 <input type="password" matInput formControlName="password" placeholder="Password" required>
                 <mat-error *ngIf="firstForm.controls.password.errors?.minlength">Password must to have at least 4
-                    charcters</mat-error>
+                    charcters.</mat-error>
+                <mat-error *ngIf="firstForm.controls.password.errors?.required">This field is required.</mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Confirm Password</mat-label>
                 <input type="password" matInput formControlName="confirmPassword" placeholder="Confirm Password"
                     required>
                 <mat-error *ngIf="firstForm.controls.confirmPassword.errors?.mustMatch">Password confirmation must match
-                    password</mat-error>
+                    password.</mat-error>
+                <mat-error *ngIf="firstForm.controls.confirmPassword.errors?.required">This field is required.</mat-error>
             </mat-form-field>
             <div>
                 <button mat-button matStepperNext>Next</button>
@@ -61,8 +64,7 @@
                 <mat-error *ngIf="secondForm.controls.lname.errors?.required">This field is required.</mat-error>
             </mat-form-field>
             <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="register(stepper)" >Register</button>
+                <button mat-button (click)="register(stepper)">Register</button>
             </div>
         </form>
     </mat-step>

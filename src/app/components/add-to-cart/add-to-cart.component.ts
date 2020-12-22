@@ -15,10 +15,8 @@ export class AddToCartComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data) {
     this.product = data.product
   }
-
   ngOnInit(): void {
   }
-
   setQuantity(quantity) {
     this.quantity = quantity.target.value
   }
