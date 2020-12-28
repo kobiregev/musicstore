@@ -37,7 +37,7 @@ export class CartComponent implements OnInit {
     this.storeService.setPath(this.ar.snapshot.routeConfig.path)
     this.getCart()
     this.productForm = this.fb.group({
-      _id: [{ value: '', disabled: true }, Validators.required],
+      _id: ['', Validators.required],
       name: ['', Validators.required],
       category: ['', Validators.required],
       price: ['', Validators.required],
@@ -49,6 +49,10 @@ export class CartComponent implements OnInit {
       price: ['', Validators.required],
       image: ['', [Validators.required, requiredFileType('jpg')]]
     })
+    setTimeout(()=>{
+      console.log(this.userService.cart)
+
+    },3000)
     // can be shortend
     this.storeService.currentPath === 'shop' ? this.displayedColumns = ['name', 'quantity', 'price', 'image', 'action'] : this.displayedColumns = ['name', 'quantity', 'price', 'image']
   }
@@ -88,6 +92,7 @@ export class CartComponent implements OnInit {
     )
   }
   saveProduct() {
+    console.log(this.productForm)
     this.storeService.saveProduct(this.toFormData(this.productForm.value)).subscribe(
       (res: any) => {
         if (!res.error) {

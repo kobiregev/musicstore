@@ -65,10 +65,7 @@ export class UserService {
   searchProducts(keywords) {
     return this.http.post(this.baseUrl + 'products/search', { keywords }, { headers: { 'Authorization': localStorage.token } })
   }
-  searchInRecipt(keywords) {
-    console.log(this.cart.products)
-  }
-
+  
   setUser(token, cart) {
     let toNavigate;
     this.user = jwt_decode(token)

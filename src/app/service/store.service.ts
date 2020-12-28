@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
-import html2canvas from 'html2canvas';
+
 
 
 @Injectable({
@@ -15,7 +15,6 @@ export class StoreService {
   categories
   currentForm;
   currentPath;
-  pdfInfo
   storeInfo;
   keywords = '';
   newProductMode = false;
@@ -44,14 +43,11 @@ export class StoreService {
       price: product.price,
     })
   }
-  setCartForPdf(pdfInfo) {
-    this.pdfInfo = pdfInfo
-  }
+
   saveProduct(product) {
     return this.http.post(this.baseUrl + '/products/editproduct', product, { headers: { 'Authorization': localStorage.token } })
   }
   addProduct(product) {
-    console.log(product)
     return this.http.post(this.baseUrl + '/products/addproduct', product, { headers: { 'Authorization': localStorage.token } })
   }
   unselectCategories() {
@@ -68,16 +64,18 @@ export class StoreService {
     return filtered.some(sr => sr.productId._id === product.productId._id) ? `<mark>${product.productId.name}</mark>` : product.productId.name
   }
   downloadPdf() {
-    let DATA = this.pdfInfo.nativeElement
-    html2canvas(DATA, { allowTaint: true, useCORS: true }).then((canvas) => {
-      let imgData = canvas.toDataURL('image/jpeg')
-      let pdf = new jsPDF('portrait', 'px', 'a4')
-      let width = pdf.internal.pageSize.getWidth();
-      let height = pdf.internal.pageSize.getHeight();
-      pdf.addImage(imgData, 'JPEG', 0, 0, width, height)
-      pdf.save("download.pdf");
+    const doc = new jsPDF()
+    const cart = this.userService.cart.products
+    let rows = []
+    for (let i = 0; i < cart.length; i++) {
+      rows.push([cart[i].productId.name, cart[i].quantity, cart[i].productId.price])
+    }
+    autoTable(doc, {
+      head: [['name', 'quantity', 'price']],
+      body: [...rows],
+      foot: [['Total Price', this.userService.cart.price]]
     })
+    doc.save('table.pdf')
   }
-
 
 }

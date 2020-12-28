@@ -33,9 +33,7 @@ export class OrderComponent implements OnInit {
     })
     this.checkOrderDates()
   }
-  ngAfterViewInit(): void {
-    this.storeService.setCartForPdf(this.cart)
-  }
+
   checkOrderDates() {
     this.storeService.checkOrderDates().subscribe(
       (res: any) => {

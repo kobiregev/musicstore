@@ -76,9 +76,9 @@
     <mat-divider></mat-divider>
     <div *ngIf="!storeService.newProductMode else addProduct">
         <form [formGroup]="productForm">
-            <mat-form-field appearance="legacy">
+            <mat-form-field appearance="legacy" >
                 <mat-label>Id</mat-label>
-                <input formControlName='_id' matInput type="text">
+                <input formControlName='_id' matInput type="text" >
             </mat-form-field>
             <mat-form-field appearance="legacy">
                 <mat-label>Name</mat-label>

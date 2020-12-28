@@ -1,7 +1,7 @@
-<mat-card>
-    <h3 class="mat-subheading-2">Available products in our store : {{storeService.storeInfo?.numberOfProducts}}</h3>
-    <h3 class="mat-subheading-2">Number of orders made in our store : {{storeService.storeInfo?.numberOfOrders}}</h3>
+<div>
+    <p class="mat-body-1 msg">Available products in our store : {{storeService.storeInfo?.numberOfProducts}}</p >
+    <p class="mat-body-1 msg">Number of orders made in our store : {{storeService.storeInfo?.numberOfOrders}}</p>
     <div *ngIf="userService.cartStatus?.cartStatus">
-        <h3 class="mat-subheading-2">{{userService.cartStatus.msg}}</h3>
+        <p class="mat-body-1 msg">{{userService.cartStatus.msg}}</p>
     </div>
-</mat-card>
+</div>
